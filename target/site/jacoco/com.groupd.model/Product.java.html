@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">shopping-cart</a> &gt; <a href="index.source.html" class="el_package">com.groupd.model</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">package com.groupd.model;
+
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = &quot;product&quot;)
+<span class="fc" id="L12">public class Product {</span>
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = &quot;product_id&quot;)
+    private Long id;
+
+    @Column(name = &quot;name&quot;, nullable = false, unique = true)
+    @Length(min = 3, message = &quot;*Name must have at least 5 characters&quot;)
+    private String name;
+
+    @Column(name = &quot;description&quot;)
+    private String description;
+
+    @Column(name = &quot;quantity&quot;, nullable = false)
+    @Min(value = 0, message = &quot;*Quantity has to be non negative number&quot;)
+    private Integer quantity;
+
+    @Column(name = &quot;price&quot;, nullable = false)
+    @DecimalMin(value = &quot;0.00&quot;, message = &quot;*Price has to be non negative number&quot;)
+    private BigDecimal price;
+
+    public Long getId() {
+<span class="nc" id="L35">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L39">        this.id = id;</span>
+<span class="nc" id="L40">    }</span>
+
+    public String getName() {
+<span class="nc" id="L43">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L47">        this.name = name;</span>
+<span class="nc" id="L48">    }</span>
+
+    public String getDescription() {
+<span class="nc" id="L51">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="nc" id="L55">        this.description = description;</span>
+<span class="nc" id="L56">    }</span>
+
+    public Integer getQuantity() {
+<span class="nc" id="L59">        return quantity;</span>
+    }
+
+    public void setQuantity(Integer quantity) {
+<span class="nc" id="L63">        this.quantity = quantity;</span>
+<span class="nc" id="L64">    }</span>
+
+    public BigDecimal getPrice() {
+<span class="nc" id="L67">        return price;</span>
+    }
+
+    public void setPrice(BigDecimal unitPrice) {
+<span class="nc" id="L71">        this.price = unitPrice;</span>
+<span class="nc" id="L72">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L77" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="nc" id="L79">        Product product = (Product) o;</span>
+
+<span class="nc" id="L81">        return id.equals(product.id);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L86">        return id.hashCode();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

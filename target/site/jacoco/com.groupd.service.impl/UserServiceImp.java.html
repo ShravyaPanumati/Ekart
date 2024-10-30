@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">shopping-cart</a> &gt; <a href="index.source.html" class="el_package">com.groupd.service.impl</a> &gt; <span class="el_source">UserServiceImp.java</span></div><h1>UserServiceImp.java</h1><pre class="source lang-java linenums">package com.groupd.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.groupd.model.User;
+import com.groupd.repository.RoleRepository;
+import com.groupd.repository.UserRepository;
+import com.groupd.service.UserService;
+
+import java.util.Collections;
+import java.util.Optional;
+
+@Service
+public class UserServiceImp implements UserService {
+
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    private static final String USER_ROLE = &quot;ROLE_USER&quot;;
+
+    @Autowired
+<span class="fc" id="L25">    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {</span>
+<span class="fc" id="L26">        this.userRepository = userRepository;</span>
+<span class="fc" id="L27">        this.roleRepository = roleRepository;</span>
+<span class="fc" id="L28">        this.passwordEncoder = passwordEncoder;</span>
+<span class="fc" id="L29">    }</span>
+
+    @Override
+    public Optional&lt;User&gt; findByUsername(String username) {
+<span class="nc" id="L33">        return userRepository.findByUsername(username);</span>
+    }
+
+    @Override
+    public Optional&lt;User&gt; findByEmail(String email) {
+<span class="nc" id="L38">        return userRepository.findByEmail(email);</span>
+    }
+
+    @Override
+    public User saveUser(User user) {
+        // Encode plaintext password
+<span class="nc" id="L44">        user.setPassword(passwordEncoder.encode(user.getPassword()));</span>
+<span class="nc" id="L45">        user.setActive(1);</span>
+        // Set Role to ROLE_USER
+<span class="nc" id="L47">        user.setRoles(Collections.singletonList(roleRepository.findByRole(USER_ROLE)));</span>
+<span class="nc" id="L48">        return userRepository.saveAndFlush(user);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

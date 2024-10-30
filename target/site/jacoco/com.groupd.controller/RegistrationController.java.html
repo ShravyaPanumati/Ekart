@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegistrationController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">shopping-cart</a> &gt; <a href="index.source.html" class="el_package">com.groupd.controller</a> &gt; <span class="el_source">RegistrationController.java</span></div><h1>RegistrationController.java</h1><pre class="source lang-java linenums">package com.groupd.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.groupd.model.User;
+import com.groupd.service.UserService;
+
+import javax.validation.Valid;
+
+@Controller
+public class RegistrationController {
+
+    private final UserService userService;
+
+    @Autowired
+<span class="fc" id="L21">    public RegistrationController(UserService userService) {</span>
+<span class="fc" id="L22">        this.userService = userService;</span>
+<span class="fc" id="L23">    }</span>
+
+    @RequestMapping(value = &quot;/registration&quot;, method = RequestMethod.GET)
+    public ModelAndView registration() {
+<span class="nc" id="L27">        ModelAndView modelAndView = new ModelAndView();</span>
+<span class="nc" id="L28">        User user = new User();</span>
+<span class="nc" id="L29">        modelAndView.addObject(&quot;user&quot;, user);</span>
+<span class="nc" id="L30">        modelAndView.setViewName(&quot;/registration&quot;);</span>
+<span class="nc" id="L31">        return modelAndView;</span>
+    }
+
+    @RequestMapping(value = &quot;/registration&quot;, method = RequestMethod.POST)
+    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (userService.findByEmail(user.getEmail()).isPresent()) {</span>
+<span class="nc" id="L38">            bindingResult</span>
+<span class="nc" id="L39">                    .rejectValue(&quot;email&quot;, &quot;error.user&quot;,</span>
+                            &quot;There is already a user registered with the email provided&quot;);
+        }
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (userService.findByUsername(user.getUsername()).isPresent()) {</span>
+<span class="nc" id="L43">            bindingResult</span>
+<span class="nc" id="L44">                    .rejectValue(&quot;username&quot;, &quot;error.user&quot;,</span>
+                            &quot;There is already a user registered with the username provided&quot;);
+        }
+
+<span class="nc" id="L48">        ModelAndView modelAndView = new ModelAndView();</span>
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L51">            modelAndView.setViewName(&quot;/registration&quot;);</span>
+        } else {
+            // Registration successful, save user
+            // Set user role to USER and set it as active
+<span class="nc" id="L55">            userService.saveUser(user);</span>
+
+<span class="nc" id="L57">            modelAndView.addObject(&quot;successMessage&quot;, &quot;User has been registered successfully&quot;);</span>
+<span class="nc" id="L58">            modelAndView.addObject(&quot;user&quot;, new User());</span>
+<span class="nc" id="L59">            modelAndView.setViewName(&quot;/registration&quot;);</span>
+        }
+<span class="nc" id="L61">        return modelAndView;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
