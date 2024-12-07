@@ -1,6 +1,6 @@
 # Shopping Cart Application DevOps
 
-This project demonstrates the implementation of a CI/CD pipeline for a Shopping Cart Application using modern DevOps tools and methodologies.
+This project demonstrates the implementation of a CI/CD pipeline for a Shopping Cart Application using DevSecOps approach.
 
 ## **Process Overview**
 - **Source Code Management**: Code changes are committed to Git, triggering the CI/CD pipeline.
