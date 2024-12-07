@@ -32,10 +32,10 @@ This project demonstrates the implementation of a CI/CD pipeline for a Shopping 
 1. Setting Up Infrastructure on AWS
 EC2 Instances:
 Instances were provisioned for running critical components:
-Jenkins
-SonarQube
-Nexus
-Kubernetes Master and Worker Nodes
+Jenkins,
+SonarQube,
+Nexus,
+Kubernetes Master, and Worker Nodes
 2. Jenkins Setup
 Install Java:
 ```
@@ -84,19 +84,22 @@ docker run -d --name nexus3 -p 8081:8081 sonatype/nexus3
 Access Nexus:
 
 Use http://<public-ip>:8081.
+
 Default credentials:
 Username: admin
 Password: From nexus-data/admin.password.
+
 5. Configure Jenkins Plugins
 Install required plugins:
 
-SonarQube Scanner
-Nexus Artifact Uploader
-Docker Pipeline
+SonarQube Scanner,
+Nexus Artifact Uploader,
+Docker Pipeline,
 Add Credentials:
 
 SonarQube token.
 DockerHub credentials.
+
 Configure SonarQube Server in Jenkins:
 
 Add SonarQube URL and token.
